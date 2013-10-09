@@ -55,7 +55,7 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 
 		return "home";
-	}
+	}//
 
 	@RequestMapping(value="/players/alive", method=RequestMethod.GET)
 	public @ResponseBody List<Player> getAllAlive(){
