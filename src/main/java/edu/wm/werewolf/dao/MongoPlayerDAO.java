@@ -31,8 +31,8 @@ public class MongoPlayerDAO implements IPlayerDAO {
 	public List<Player> getAllAlive() {
 		//DB db = mongo.getDB("Werewolf");
 		
-		
-		logger.info("Mongo user is " + mongoURI.getUsername() + " mongo pass is: " + mongoURI.getPassword().toString());
+		String pass = new String(mongoURI.getPassword());
+		logger.info("Mongo user is " + mongoURI.getUsername() + " mongo pass is: " + pass);
 		DB db = null;
 		try {
 			db = mongoURI.connectDB();
