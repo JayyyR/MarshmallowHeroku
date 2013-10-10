@@ -41,7 +41,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 			e.printStackTrace();
 		}
         db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
-
+ 
 		
 		List<Player> players = new ArrayList<Player>();
 
