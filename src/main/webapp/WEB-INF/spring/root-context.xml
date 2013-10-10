@@ -15,9 +15,9 @@
 	<bean id="userService" class="edu.wm.werewolf.service.UserService" />
 	<bean id="gameService" class="edu.wm.werewolf.service.GameService" />
 
-	<bean id="mongoURI" class="com.mongodb.MongoURI">
+	<!-- <bean id="mongoURI" class="com.mongodb.MongoURI">
       <constructor-arg value="${MONGOHQ_URL}"/>
-    </bean>
+    </bean>-->
   
     <!-- create db object by calling getDB on mongo bean 
     <bean id="db" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">

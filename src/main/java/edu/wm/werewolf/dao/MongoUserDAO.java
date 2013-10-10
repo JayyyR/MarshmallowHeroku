@@ -19,9 +19,9 @@ import edu.wm.werewolf.domain.User;
 
 public class MongoUserDAO implements IUserDAO {
 	
-	@Autowired private MongoURI mongoURI;
+	//@Autowired private MongoURI mongoURI;
 	//@Autowired private MongoClient mongo;
-	
+	MongoURI mongoURI = new MongoURI(System.getenv("MONGOHQ_URL"));
 	@Override
 	public void createUser(User user) {
 		// TODO Auto-generated method stub

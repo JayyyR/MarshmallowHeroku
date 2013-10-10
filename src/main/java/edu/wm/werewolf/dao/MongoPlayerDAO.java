@@ -20,8 +20,8 @@ import edu.wm.werewolf.domain.Player;
 
 public class MongoPlayerDAO implements IPlayerDAO {
 	//@Autowired private MongoClient mongo;
-	@Autowired private MongoURI mongoURI;
-
+	//@Autowired private MongoURI mongoURI;
+	MongoURI mongoURI = new MongoURI(System.getenv("MONGOHQ_URL"));
 
 	@Override
 	public List<Player> getAllAlive() {

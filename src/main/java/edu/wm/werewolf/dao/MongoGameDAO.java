@@ -9,13 +9,18 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoURI;
+import com.sun.org.apache.xerces.internal.util.URI;
 
 import edu.wm.werewolf.domain.Game;
 
 public class MongoGameDAO implements IGameDAO{
 	
 	//@Autowired private MongoClient mongo;
-	@Autowired private MongoURI mongoURI;
+	//@Autowired private MongoURI mongoURI;
+	
+	//URI mongoURI = new URI(System.getenv("MONGOHQ_URL"));
+
+	MongoURI mongoURI = new MongoURI(System.getenv("MONGOHQ_URL"));
 	
 	@Override
 	public void createGame(Game game) {
