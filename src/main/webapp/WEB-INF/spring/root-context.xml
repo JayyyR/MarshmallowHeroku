@@ -16,7 +16,7 @@
 	<bean id="gameService" class="edu.wm.werewolf.service.GameService" />
 
 	<bean id="mongoURI" class="com.mongodb.MongoURI">
-      <constructor-arg value="${MONGOHQ_URL}"/>
+      <constructor-arg value="mongodb://<user>:<password>@paulo.mongohq.com:10032/werewolf"/>
     </bean>
   
     <!-- create db object by calling getDB on mongo bean 
