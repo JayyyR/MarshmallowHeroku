@@ -4,6 +4,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList; //error!
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mongodb.BasicDBObject;
@@ -16,17 +18,21 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoURI;
 
 import wm.edu.exceptions.NoPlayerFoundException;
+import edu.wm.werewolf.HomeController;
 import edu.wm.werewolf.domain.Player;
 
 public class MongoPlayerDAO implements IPlayerDAO {
 	//@Autowired private MongoClient mongo;
 	//@Autowired private MongoURI mongoURI;
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	MongoURI mongoURI = new MongoURI(System.getenv("MONGOHQ_URL"));
 
 	@Override
 	public List<Player> getAllAlive() {
 		//DB db = mongo.getDB("Werewolf");
 		
+		
+		logger.info("Mongo user is " + mongoURI.getUsername() + " mongo pass is: " + mongoURI.getPassword().toString());
 		DB db = null;
 		try {
 			db = mongoURI.connectDB();
