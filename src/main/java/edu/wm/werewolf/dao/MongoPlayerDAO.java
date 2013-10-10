@@ -32,7 +32,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		//DB db = mongo.getDB("Werewolf");
 		
 		String pass = new String(mongoURI.getPassword());
-		logger.info("Mongo user is " + mongoURI.getUgitsername() + " mongo pass is: " + pass);
+		logger.info("Mongo user is " + mongoURI.getUsername() + " mongo pass is: " + pass);
 		DB db = null;
 		try {
 			db = mongoURI.connectDB();

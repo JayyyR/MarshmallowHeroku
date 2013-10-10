@@ -27,7 +27,7 @@ import edu.wm.werewolf.service.GameService;
 import edu.wm.werewolf.service.PlayerService;
 import edu.wm.werewolf.service.UserService;
 //test
-/** 
+/**
  * Handles requests for the application home page.
  */
 @Controller
