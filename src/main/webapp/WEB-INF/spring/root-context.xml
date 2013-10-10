@@ -19,13 +19,13 @@
       <constructor-arg value="${MONGOHQ_URL}"/>
     </bean>
   
-    <!-- create db object by calling getDB on mongo bean -->
+    <!-- create db object by calling getDB on mongo bean 
     <bean id="db" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
       <property name="targetObject"><ref local="mongoURI"/></property>
       <property name="targetMethod"><value>connectDB</value></property>
-    </bean>  
+    </bean>  -->
  
-    <!-- call authenticate on db object -->
+    <!-- call authenticate on db object 
     <bean id="authenticateDB"
         class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetObject"><ref local="db" /></property>
@@ -38,6 +38,6 @@
                 <value>#{ @mongoURI.getPassword() }</value>
             </list>
         </property>
-    </bean>
+    </bean>-->
 
 </beans>

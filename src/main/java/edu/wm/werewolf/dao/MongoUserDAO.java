@@ -12,20 +12,29 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoURI;
 
 import edu.wm.werewolf.domain.Player;
 import edu.wm.werewolf.domain.User;
 
 public class MongoUserDAO implements IUserDAO {
 	
-	@Autowired private DB db;
+	@Autowired private MongoURI mongoURI;
 	//@Autowired private MongoClient mongo;
 	
 	@Override
 	public void createUser(User user) {
 		// TODO Auto-generated method stub
 		//DB db = mongo.getDB("Werewolf");
-		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+        
 		DBCollection users = db.getCollection("User");
 		BasicDBObject document = new BasicDBObject();
 		document.put("id", user.getId());
@@ -43,6 +52,15 @@ public class MongoUserDAO implements IUserDAO {
 		// TODO Auto-generated method stub
 		
 		//DB db = mongo.getDB("Werewolf");
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
 		
 		DBCollection players = db.getCollection("User");
 		BasicDBObject searchQuery = new BasicDBObject();
@@ -64,6 +82,15 @@ public class MongoUserDAO implements IUserDAO {
 		List<User> users = new ArrayList<User>();
 
 		//DB db = mongo.getDB("Werewolf");
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
 
 		DBCollection usersCol = db.getCollection("User");
 
@@ -86,6 +113,15 @@ public class MongoUserDAO implements IUserDAO {
 		
 		//DB db = mongo.getDB("Werewolf");
 		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+		
 		DBCollection users = db.getCollection("User");
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("id", u.getId());
@@ -105,6 +141,15 @@ public class MongoUserDAO implements IUserDAO {
 		// TODO Auto-generated method stub
 		
 		//DB db = mongo.getDB("Werewolf");
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
 		
 		DBCollection users = db.getCollection("User");
 		BasicDBObject searchQuery = new BasicDBObject();

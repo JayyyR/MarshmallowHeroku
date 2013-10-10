@@ -13,18 +13,28 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoURI;
 
 import wm.edu.exceptions.NoPlayerFoundException;
 import edu.wm.werewolf.domain.Player;
 
 public class MongoPlayerDAO implements IPlayerDAO {
 	//@Autowired private MongoClient mongo;
-	@Autowired private DB db;
+	@Autowired private MongoURI mongoURI;
 
 
 	@Override
 	public List<Player> getAllAlive() {
 		//DB db = mongo.getDB("Werewolf");
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
 
 		
 		List<Player> players = new ArrayList<Player>();
@@ -51,6 +61,16 @@ public class MongoPlayerDAO implements IPlayerDAO {
 	@Override
 	public void setDead(Player p) {
 		//DB db = mongo.getDB("Werewolf");
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+        
 		DBCollection players = db.getCollection("Player");
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("id", p.getId());
@@ -67,6 +87,16 @@ public class MongoPlayerDAO implements IPlayerDAO {
 	@Override
 	public void insertPlayer(Player player) {
 		//DB db = mongo.getDB("Werewolf");
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+        
 		DBCollection players = db.getCollection("Player");
 		BasicDBObject document = new BasicDBObject();
 		document.put("id", player.getId());
@@ -83,6 +113,16 @@ public class MongoPlayerDAO implements IPlayerDAO {
 	@Override
 	public Player getPlayerById(String id) throws NoPlayerFoundException {
 
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+        
 		//DB db = mongo.getDB("Werewolf");
 		DBCollection players = db.getCollection("Player");
 		BasicDBObject searchQuery = new BasicDBObject();
@@ -103,6 +143,15 @@ public class MongoPlayerDAO implements IPlayerDAO {
 	public void placeVoteOn(Player p) {
 
 		//DB db = mongo.getDB("Werewolf");
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
 		DBCollection players = db.getCollection("Player");
 
 		System.out.println("in mongo, placing vote on player: " + p.getId());
@@ -124,6 +173,15 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		// TODO Auto-generated method stub
 
 		//DB db = mongo.getDB("Werewolf");
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
 
 		DBCollection users = db.getCollection("Player");
 		BasicDBObject searchQuery = new BasicDBObject();
