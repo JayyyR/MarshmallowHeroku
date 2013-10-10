@@ -21,6 +21,8 @@ public class MongoGameDAO implements IGameDAO{
 	public void createGame(Game game) {
 		// TODO Auto-generated method stub
 		
+		
+		
 		DB db = null;
 		try {
 			db = mongoURI.connectDB();
