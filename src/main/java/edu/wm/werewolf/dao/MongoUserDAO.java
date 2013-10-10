@@ -18,12 +18,13 @@ import edu.wm.werewolf.domain.User;
 
 public class MongoUserDAO implements IUserDAO {
 	
-	@Autowired private MongoClient mongo;
+	@Autowired private DB db;
+	//@Autowired private MongoClient mongo;
 	
 	@Override
 	public void createUser(User user) {
 		// TODO Auto-generated method stub
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		
 		DBCollection users = db.getCollection("User");
 		BasicDBObject document = new BasicDBObject();
@@ -41,7 +42,7 @@ public class MongoUserDAO implements IUserDAO {
 	public User getUserByID(String id) {
 		// TODO Auto-generated method stub
 		
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		
 		DBCollection players = db.getCollection("User");
 		BasicDBObject searchQuery = new BasicDBObject();
@@ -62,7 +63,7 @@ public class MongoUserDAO implements IUserDAO {
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<User>();
 
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 
 		DBCollection usersCol = db.getCollection("User");
 
@@ -83,7 +84,7 @@ public class MongoUserDAO implements IUserDAO {
 	public void updateEmail(User u) {
 		// TODO Auto-generated method stub
 		
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		
 		DBCollection users = db.getCollection("User");
 		BasicDBObject searchQuery = new BasicDBObject();
@@ -103,7 +104,7 @@ public class MongoUserDAO implements IUserDAO {
 	public void updateImage(User u) {
 		// TODO Auto-generated method stub
 		
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		
 		DBCollection users = db.getCollection("User");
 		BasicDBObject searchQuery = new BasicDBObject();

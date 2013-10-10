@@ -18,13 +18,13 @@ import wm.edu.exceptions.NoPlayerFoundException;
 import edu.wm.werewolf.domain.Player;
 
 public class MongoPlayerDAO implements IPlayerDAO {
-	@Autowired private MongoClient mongo;
-
+	//@Autowired private MongoClient mongo;
+	@Autowired private DB db;
 
 
 	@Override
 	public List<Player> getAllAlive() {
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 
 		
 		List<Player> players = new ArrayList<Player>();
@@ -50,7 +50,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 
 	@Override
 	public void setDead(Player p) {
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		DBCollection players = db.getCollection("Player");
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("id", p.getId());
@@ -66,7 +66,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 
 	@Override
 	public void insertPlayer(Player player) {
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		DBCollection players = db.getCollection("Player");
 		BasicDBObject document = new BasicDBObject();
 		document.put("id", player.getId());
@@ -83,7 +83,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 	@Override
 	public Player getPlayerById(String id) throws NoPlayerFoundException {
 
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		DBCollection players = db.getCollection("Player");
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("id", id);
@@ -102,7 +102,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 	@Override
 	public void placeVoteOn(Player p) {
 
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		DBCollection players = db.getCollection("Player");
 
 		System.out.println("in mongo, placing vote on player: " + p.getId());
@@ -123,7 +123,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 	public void updatePos(Player player) {
 		// TODO Auto-generated method stub
 
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 
 		DBCollection users = db.getCollection("Player");
 		BasicDBObject searchQuery = new BasicDBObject();

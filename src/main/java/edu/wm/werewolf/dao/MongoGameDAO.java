@@ -11,13 +11,14 @@ import edu.wm.werewolf.domain.Game;
 
 public class MongoGameDAO implements IGameDAO{
 	
-	@Autowired private MongoClient mongo;
-
+	//@Autowired private MongoClient mongo;
+	@Autowired private DB db;
+	
 	@Override
 	public void createGame(Game game) {
 		// TODO Auto-generated method stub
 		
-		DB db = mongo.getDB("Werewolf");
+		//DB db = mongo.getDB("Werewolf");
 		DBCollection games = db.getCollection("Game");
 		BasicDBObject document = new BasicDBObject();
 		document.put("dayNightFreq", game.getDayNightFreq());
