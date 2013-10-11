@@ -200,7 +200,7 @@ public class HomeController {
 
     @RequestMapping(value="/games/create", method=RequestMethod.POST)
    	public @ResponseBody String create(int dayNightFreq, Date createdDate) {
-    	
+    	logger.info("before game creation homecontroller");
    		Game game = new Game(dayNightFreq, createdDate);
    		logger.info("in create game home controller. game day night is: " + game.getDayNightFreq()
    				+ " game created date is: " + game.getCreatedDate());
