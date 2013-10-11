@@ -101,7 +101,7 @@ public class HomeController {
 					System.out.println("adding players");
 					System.out.println("player.get id: " + player.getId());
 					System.out.println("requesting id: " + id);
-					if (player.getId().equals(id))
+					if (!player.getId().equals(id))
 						closePlayers.add(player);
 				}
 			}
