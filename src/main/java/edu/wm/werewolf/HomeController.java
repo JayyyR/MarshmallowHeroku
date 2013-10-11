@@ -99,8 +99,8 @@ public class HomeController {
 						&& player.getLng() >= requestingPlayer.getLng() - 10){
 					
 					System.out.println("adding players");
-
-					closePlayers.add(player);
+					if (player.getId() != id)
+						closePlayers.add(player);
 				}
 			}
 
