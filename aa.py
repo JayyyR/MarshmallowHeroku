@@ -59,4 +59,21 @@ player4 = {'id':"Jerry", 'isDead':False, 'lat':1.0,
            'lng':23.0, 'userId':'whatsthedealwithtisgame', 'isWerewolf':False}
 players = [player1,player2,player3,player4]
 
+for player in players:
+    addUser = requests.post('http://jayyyyrwerewolf.herokuapp.com/players/insert', params=player);
+    
+print ("\n..getting all alive players")
+# get all players to make sure they were added
+getPlayers = requests.get('http://jayyyyrwerewolf.herokuapp.com/players/alive')
+print getPlayers.text
 
+#get player by id
+print ("\n just get Joe by his id: Joe")
+getJoe = requests.get('http://jayyyyrwerewolf.herokuapp.com/players/Joe')
+print getJoe.text
+
+#get players nearby
+Joe = "Joe"
+print ("\n get players nearby Joe")
+getNear = requests.get('http://jayyyyrwerewolf.herokuapp.com/players/nearby', params = Joe)
+print getNear.text

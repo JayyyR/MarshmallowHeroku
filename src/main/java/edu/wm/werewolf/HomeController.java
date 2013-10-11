@@ -84,9 +84,14 @@ public class HomeController {
 		System.out.println("in nearby yo");
 		Player requestingPlayer = playerService.getPlayerById(id);
 		List<Player> players = playerService.getAllAlive();
+		
+		System.out.println("Players size: " + players.size());
 		List<Player> closePlayers = new ArrayList<Player>();
 		for (Player player:players){
-
+			
+			System.out.println("checking player: " + player.getId());
+			System.out.println("his lat is: " + player.getLat());
+			System.out.println("his long is: " + player.getLng());
 			//check if within 10(?) of lat and long)
 			if (player.getLat() <= requestingPlayer.getLat() + 10
 					&& player.getLat() >= requestingPlayer.getLat() - 10){
