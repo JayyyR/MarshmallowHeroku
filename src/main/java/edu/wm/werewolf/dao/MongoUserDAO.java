@@ -4,6 +4,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mongodb.BasicDBObject;
@@ -14,11 +16,12 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoURI;
 
+import edu.wm.werewolf.HomeController;
 import edu.wm.werewolf.domain.Player;
 import edu.wm.werewolf.domain.User;
 
 public class MongoUserDAO implements IUserDAO {
-	
+	private static final Logger logger = LoggerFactory.getLogger(MongoUserDAO.class);
 	//@Autowired private MongoURI mongoURI;
 	//@Autowired private MongoClient mongo;
 	MongoURI mongoURI = new MongoURI(System.getenv("MONGOHQ_URL"));
@@ -82,7 +85,7 @@ public class MongoUserDAO implements IUserDAO {
 		List<User> users = new ArrayList<User>();
 
 		//DB db = mongo.getDB("Werewolf");
-		
+		logger.info("in get Allusers mongodao");
 		DB db = null;
 		try {
 			db = mongoURI.connectDB();

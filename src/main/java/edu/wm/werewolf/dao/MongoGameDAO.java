@@ -2,6 +2,8 @@ package edu.wm.werewolf.dao;
 
 import java.net.UnknownHostException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mongodb.BasicDBObject;
@@ -14,7 +16,7 @@ import com.sun.org.apache.xerces.internal.util.URI;
 import edu.wm.werewolf.domain.Game;
 
 public class MongoGameDAO implements IGameDAO{
-	
+	private static final Logger logger = LoggerFactory.getLogger(MongoGameDAO.class);
 	//@Autowired private MongoClient mongo;
 	//@Autowired private MongoURI mongoURI;
 	
@@ -25,7 +27,7 @@ public class MongoGameDAO implements IGameDAO{
 	@Override
 	public void createGame(Game game) {
 		// TODO Auto-generated method stub
-		
+		logger.info("in create game mongogamedao");
 		
 		
 		DB db = null;

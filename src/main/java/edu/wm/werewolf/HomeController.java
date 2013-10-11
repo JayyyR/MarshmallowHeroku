@@ -168,6 +168,8 @@ public class HomeController {
     
     @RequestMapping(value="/users/getAll", method=RequestMethod.GET)
 	public @ResponseBody List<User> getAll(){
+    	
+    	logger.info("in get All");
     	List<User> users = userService.getAllUsers();
 		return users;
 
@@ -200,6 +202,8 @@ public class HomeController {
    	public @ResponseBody String create(int dayNightFreq, Date createdDate) {
     	
    		Game game = new Game(dayNightFreq, createdDate);
+   		logger.info("in create game home controller. game day night is: " + game.getDayNightFreq()
+   				+ " game created date is: " + game.getCreatedDate());
    		gameService.createGame(game);
    		return "created game";
 
