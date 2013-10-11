@@ -50,7 +50,7 @@ updateEmail = requests.post('http://jayyyyrwerewolf.herokuapp.com/users/updateEm
 print("\n...Adding players")
 #Add players
 player1 = {'id':"Joe", 'isDead':False, 'lat':2.0, 
-           'lng':40.0, 'userId':'JayyyyyyyyyR', 'isWerewolf':False}
+           'lng':4.0, 'userId':'JayyyyyyyyyR', 'isWerewolf':False}
 player2 = {'id':"Bill", 'isDead':False, 'lat':8.0, 
            'lng':11.0, 'userId':'foxnewsrox', 'isWerewolf':False}
 player3 = {'id':"Spider-Man", 'isDead':False, 'lat':3.0, 
@@ -79,18 +79,10 @@ getNear = requests.get('http://jayyyyrwerewolf.herokuapp.com/players/nearby', pa
 print getNear.text
 
 #kill
+Joe = {'id': 'Joe'}
 print ("\n...killing Joe")
-getNear = requests.get('http://jayyyyrwerewolf.herokuapp.com/players/kill', params = Joe)
+getNear = requests.post('http://jayyyyrwerewolf.herokuapp.com/players/kill', params = Joe)
 
 print ("\nverify Joe is dead:")
 getJoe = requests.get('http://jayyyyrwerewolf.herokuapp.com/players/Joe')
 print getJoe.text
-
-#vote
-Jerry = {'id':'Jerry'}
-print ("\n...placing vote on Jerry")
-voteJerry = requests.get('http://jayyyyrwerewolf.herokuapp.com/players/vote', params = Jerry)
-
-print ("\nverify Jerry is voted on:")
-getJer = requests.get('http://jayyyyrwerewolf.herokuapp.com/players/Jerry')
-print getJer.text
