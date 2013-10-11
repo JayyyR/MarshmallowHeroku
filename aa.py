@@ -4,7 +4,7 @@ import datetime
 date = datetime.date.today()
 
 #Create a game
-game = {'dayNightFreq': 1, 'createdDate': date}
+game = {'dayNightFreq': 1, 'createdDate': date.strftime("%Y-%m-%d %H:%M:%S")}
 
 print "...Adding game to database\n"
 gameCreate = requests.post('http://jayyyyrwerewolf.herokuapp.com/games/create', params=game);

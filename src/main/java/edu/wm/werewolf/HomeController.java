@@ -2,6 +2,8 @@ package edu.wm.werewolf;
 
 import java.security.Principal;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -199,9 +201,17 @@ public class HomeController {
     
 
     @RequestMapping(value="/games/create", method=RequestMethod.POST)
-   	public @ResponseBody String create(int dayNightFreq, Date createdDate) {
+   	public @ResponseBody String create(int dayNightFreq, String createdDate) {
+    	DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
+    	Date date = null;
+		try {
+			date = formatter.parse(createdDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	logger.info("before game creation homecontroller");
-   		Game game = new Game(dayNightFreq, createdDate);
+   		Game game = new Game(dayNightFreq, date);
    		logger.info("in create game home controller. game day night is: " + game.getDayNightFreq()
    				+ " game created date is: " + game.getCreatedDate());
    		gameService.createGame(game);
