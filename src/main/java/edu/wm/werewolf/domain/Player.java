@@ -6,20 +6,20 @@ public class Player {
 	private boolean isDead;
 	private double lat;
 	private double lng;
-	public boolean isVotedOn() {
-		return votedOn;
-	}
-
-	public void setVotedOn(boolean votedOn) {
-		this.votedOn = votedOn;
-	}
-
 	private String userId;
 	private boolean isWerewolf;
 	private boolean votedOn = false;
 	
 	public Player(){
 		
+	}
+	
+	public boolean isVotedOn() {
+		return votedOn;
+	}
+
+	public void setVotedOn(boolean votedOn) {
+		this.votedOn = votedOn;
 	}
 
 	public Player(String id, boolean isDead, double lat,

@@ -166,6 +166,13 @@ public class HomeController {
 
 	}
     
+    @RequestMapping("/users/{id}")
+	@ResponseBody
+	public User  getUserById(@PathVariable String id) {
+		System.out.println("in id");
+		return userService.getUserById(id);
+	}
+    
     @RequestMapping(value="/users/getPass", method=RequestMethod.GET)
 	public @ResponseBody String getPass(String id){
 
@@ -223,6 +230,12 @@ public class HomeController {
    				+ " game created date is: " + game.getCreatedDate());
    		gameService.createGame(game);
    		return "created game";
+
+   	}
+    
+    @RequestMapping(value="/games/check", method=RequestMethod.GET)
+   	public @ResponseBody boolean check() {
+    	return gameService.checkGame();
 
    	}
 

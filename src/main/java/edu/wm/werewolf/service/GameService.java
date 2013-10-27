@@ -13,5 +13,9 @@ public class GameService {
 		gameDAO.createGame(game);
 	
 	}
+	
+	public boolean checkGame(){
+		return gameDAO.checkGame();
+	}
 
 }
