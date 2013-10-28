@@ -269,5 +269,11 @@ public class HomeController {
 		return gameService.checkGame();
 
 	}
+	
+	@RequestMapping(value="/games/checkday", method=RequestMethod.GET)
+	public @ResponseBody boolean checkDay() {
+		return gameService.checkDay();
+
+	}
 
 }

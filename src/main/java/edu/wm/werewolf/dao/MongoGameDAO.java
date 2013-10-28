@@ -10,6 +10,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoURI;
 import com.sun.org.apache.xerces.internal.util.URI;
@@ -45,6 +46,7 @@ public class MongoGameDAO implements IGameDAO{
 		BasicDBObject document = new BasicDBObject();
 		document.put("dayNightFreq", game.getDayNightFreq());
 		document.put("createdDate", game.getCreatedDate());
+		document.put("isDay", game.isDay());
 		games.insert(document);
 		
 	}
@@ -71,6 +73,26 @@ public class MongoGameDAO implements IGameDAO{
 		}
 		
 		return false;
+	}
+
+	@Override
+	public boolean checkDay() {
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+		
+		//DB db = mongo.getDB("Werewolf");
+		DBCollection games = db.getCollection("Game");
+		
+		DBCursor cursor = games.find();
+
+		DBObject gameFound = cursor.next();
+		return ((Boolean) gameFound.get("isDay")).booleanValue();
 	}
 
 }

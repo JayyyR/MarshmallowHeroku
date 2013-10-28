@@ -8,6 +8,7 @@ public interface IGameDAO {
 	
 	void createGame(Game game);
 	boolean checkGame();
+	boolean checkDay();
 	
 	
 
