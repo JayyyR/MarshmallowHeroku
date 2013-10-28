@@ -215,7 +215,7 @@ public class HomeController {
     
 
     @RequestMapping(value="/games/create", method=RequestMethod.POST)
-   	public @ResponseBody String create(int dayNightFreq, String createdDate) {
+   	public @ResponseBody String create(String dayNightFreq, String createdDate) {
     	DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
     	Date date = null;
 		try {
@@ -225,7 +225,7 @@ public class HomeController {
 			e.printStackTrace();
 		}
     	logger.info("before game creation homecontroller");
-   		Game game = new Game(dayNightFreq, date);
+   		Game game = new Game(Integer.parseInt(dayNightFreq), date);
    		logger.info("in create game home controller. game day night is: " + game.getDayNightFreq()
    				+ " game created date is: " + game.getCreatedDate());
    		gameService.createGame(game);
