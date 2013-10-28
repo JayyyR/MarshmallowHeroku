@@ -70,6 +70,38 @@ public class HomeController {
 
 	}
 	
+	@RequestMapping(value="/players/werewolves", method=RequestMethod.GET)
+	public @ResponseBody int getAllWolves(){
+		int wolfCount = 0;
+		List<Player> players = playerService.getAllAlive();
+		
+		for (Player player : players){
+			
+			if(player.isWerewolf())
+				wolfCount++;
+			
+			 
+		}
+		return wolfCount;
+
+	}
+	
+	@RequestMapping(value="/players/all", method=RequestMethod.GET)
+	public @ResponseBody int getEmAll(){
+		int count = 0;
+		List<Player> players = playerService.getAllAlive();
+		
+		for (Player player : players){
+			
+			if(player.isWerewolf())
+				count++;
+			
+			 
+		}
+		return count;
+
+	}
+	
 	@RequestMapping("/players/{id}")
 	@ResponseBody
 	public Player getById(@PathVariable String id) {
@@ -112,10 +144,10 @@ public class HomeController {
 	}
 
 	@RequestMapping(value="/players/insert", method=RequestMethod.POST)
-	public @ResponseBody String insert(String id, boolean isDead, double lat, 
-			double lng, String userId, boolean isWerewolf){
+	public @ResponseBody String insert(String id, String isDead, String lat, 
+			String lng, String userId, String isWerewolf){
 
-		Player player = new Player(id, isDead, lat, lng, userId, isWerewolf);
+		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, Boolean.valueOf(isWerewolf));
 		playerService.insertPlayer(player);
 		return "inserted";
 
