@@ -50,7 +50,7 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
 		logger.info("MONGO HQ URL IS: " + System.getenv("MONGOHQ_URL"));
-		
+
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
@@ -69,39 +69,38 @@ public class HomeController {
 		return players;
 
 	}
-	
+
 	@RequestMapping(value="/players/werewolves", method=RequestMethod.GET)
 	public @ResponseBody int getAllWolves(){
 		int wolfCount = 0;
 		List<Player> players = playerService.getAllAlive();
-		
+
 		for (Player player : players){
-			
+
 			if(player.isWerewolf())
 				wolfCount++;
-			
-			 
+
+
 		}
 		return wolfCount;
 
 	}
-	
+
 	@RequestMapping(value="/players/all", method=RequestMethod.GET)
 	public @ResponseBody int getEmAll(){
 		int count = 0;
 		List<Player> players = playerService.getAllAlive();
-		
+
 		for (Player player : players){
-			
-			if(player.isWerewolf())
-				count++;
-			
-			 
+
+			count++;
+
+
 		}
 		return count;
 
 	}
-	
+
 	@RequestMapping("/players/{id}")
 	@ResponseBody
 	public Player getById(@PathVariable String id) {
@@ -112,15 +111,15 @@ public class HomeController {
 
 	@RequestMapping(value="/players/nearby", method=RequestMethod.GET)
 	public @ResponseBody List<Player> getNearbyPlayers(String id){
-		
+
 		System.out.println("in nearby yo");
 		Player requestingPlayer = playerService.getPlayerById(id);
 		List<Player> players = playerService.getAllAlive();
-		
+
 		System.out.println("Players size: " + players.size());
 		List<Player> closePlayers = new ArrayList<Player>();
 		for (Player player:players){
-			
+
 			System.out.println("checking player: " + player.getId());
 			System.out.println("his lat is: " + player.getLat());
 			System.out.println("his long is: " + player.getLng());
@@ -129,7 +128,7 @@ public class HomeController {
 					&& player.getLat() >= requestingPlayer.getLat() - 10){
 				if (player.getLng() <= requestingPlayer.getLng() + 10
 						&& player.getLng() >= requestingPlayer.getLng() - 10){
-					
+
 					System.out.println("adding players");
 					System.out.println("player.get id: " + player.getId());
 					System.out.println("requesting id: " + id);
@@ -153,42 +152,42 @@ public class HomeController {
 
 	}
 
-    
-	 // handles person form submit
-    @RequestMapping(value="/players/vote", method=RequestMethod.POST)
-    @ResponseBody
-    public void placeVote(String id) {
-    	System.out.println("in place vote homecontrol");
-        playerService.placeVoteOn(playerService.getPlayerById(id));
-    }
 
-    
-    // handles person form submit
-    @RequestMapping(value="/players/kill", method=RequestMethod.POST)
-    @ResponseBody
-    public void kill(String id) {
-    	System.out.println("in kill homecontroller");
-    	playerService.setDead(playerService.getPlayerById(id));
-       
-    }
-    
- // handles person form submit
-    @RequestMapping(value="/players/updatePos", method=RequestMethod.POST)
-    @ResponseBody
-    public void updatePos(String id, double lat, double lng) {
-    	System.out.println("in update homecontroller");
-    	
-    	Player updatePlay = playerService.getPlayerById(id);
-    	updatePlay.setLat(lat);
-    	updatePlay.setLng(lng);
-    	playerService.updatePos(updatePlay);
-       
-    }
-    
-    ///////////////User Stuff////////////////
-    
-    
-    @RequestMapping(value="/users/create", method=RequestMethod.POST)
+	// handles person form submit
+	@RequestMapping(value="/players/vote", method=RequestMethod.POST)
+	@ResponseBody
+	public void placeVote(String id) {
+		System.out.println("in place vote homecontrol");
+		playerService.placeVoteOn(playerService.getPlayerById(id));
+	}
+
+
+	// handles person form submit
+	@RequestMapping(value="/players/kill", method=RequestMethod.POST)
+	@ResponseBody
+	public void kill(String id) {
+		System.out.println("in kill homecontroller");
+		playerService.setDead(playerService.getPlayerById(id));
+
+	}
+
+	// handles person form submit
+	@RequestMapping(value="/players/updatePos", method=RequestMethod.POST)
+	@ResponseBody
+	public void updatePos(String id, double lat, double lng) {
+		System.out.println("in update homecontroller");
+
+		Player updatePlay = playerService.getPlayerById(id);
+		updatePlay.setLat(lat);
+		updatePlay.setLng(lng);
+		playerService.updatePos(updatePlay);
+
+	}
+
+	///////////////User Stuff////////////////
+
+
+	@RequestMapping(value="/users/create", method=RequestMethod.POST)
 	public @ResponseBody String create(String firstName, String lastName, String id,
 			String hashedPassword, String imageURL, String email) {
 
@@ -197,15 +196,15 @@ public class HomeController {
 		return "created";
 
 	}
-    
-    @RequestMapping("/users/{id}")
+
+	@RequestMapping("/users/{id}")
 	@ResponseBody
 	public User  getUserById(@PathVariable String id) {
 		System.out.println("in id");
 		return userService.getUserById(id);
 	}
-    
-    @RequestMapping(value="/users/getPass", method=RequestMethod.GET)
+
+	@RequestMapping(value="/users/getPass", method=RequestMethod.GET)
 	public @ResponseBody String getPass(String id){
 
 		User user = userService.getUserById(id);
@@ -213,62 +212,62 @@ public class HomeController {
 		return hashedPass;
 
 	}
-    
-    @RequestMapping(value="/users/getAll", method=RequestMethod.GET)
+
+	@RequestMapping(value="/users/getAll", method=RequestMethod.GET)
 	public @ResponseBody List<User> getAll(){
-    	
-    	logger.info("in get All");
-    	List<User> users = userService.getAllUsers();
+
+		logger.info("in get All");
+		List<User> users = userService.getAllUsers();
 		return users;
 
 	}
-    
-    @RequestMapping(value="/users/updateEmail", method=RequestMethod.POST)
+
+	@RequestMapping(value="/users/updateEmail", method=RequestMethod.POST)
 	public @ResponseBody void updateEmail(String id, String email) {
-    	
-    	User user = userService.getUserById(id);
-    	user.setEmail(email);
-    	
-    	userService.updateEmail(user);
+
+		User user = userService.getUserById(id);
+		user.setEmail(email);
+
+		userService.updateEmail(user);
 
 	}
-    
-    @RequestMapping(value="/users/updateImage", method=RequestMethod.POST)
-   	public @ResponseBody void updateImage(String id, String imageURL) {
-       	
-       	User user = userService.getUserById(id);
-       	user.setImageURL(imageURL);
-       	
-       	userService.updateImage(user);
 
-   	}
-    
-    ////////////////Game stuff/////////////
-    
+	@RequestMapping(value="/users/updateImage", method=RequestMethod.POST)
+	public @ResponseBody void updateImage(String id, String imageURL) {
 
-    @RequestMapping(value="/games/create", method=RequestMethod.POST)
-   	public @ResponseBody String create(String dayNightFreq, String createdDate) {
-    	DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
-    	Date date = null;
+		User user = userService.getUserById(id);
+		user.setImageURL(imageURL);
+
+		userService.updateImage(user);
+
+	}
+
+	////////////////Game stuff/////////////
+
+
+	@RequestMapping(value="/games/create", method=RequestMethod.POST)
+	public @ResponseBody String create(String dayNightFreq, String createdDate) {
+		DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
+		Date date = null;
 		try {
 			date = formatter.parse(createdDate);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	logger.info("before game creation homecontroller");
-   		Game game = new Game(Integer.parseInt(dayNightFreq), date);
-   		logger.info("in create game home controller. game day night is: " + game.getDayNightFreq()
-   				+ " game created date is: " + game.getCreatedDate());
-   		gameService.createGame(game);
-   		return "created game";
+		logger.info("before game creation homecontroller");
+		Game game = new Game(Integer.parseInt(dayNightFreq), date);
+		logger.info("in create game home controller. game day night is: " + game.getDayNightFreq()
+				+ " game created date is: " + game.getCreatedDate());
+		gameService.createGame(game);
+		return "created game";
 
-   	}
-    
-    @RequestMapping(value="/games/check", method=RequestMethod.GET)
-   	public @ResponseBody boolean check() {
-    	return gameService.checkGame();
+	}
 
-   	}
+	@RequestMapping(value="/games/check", method=RequestMethod.GET)
+	public @ResponseBody boolean check() {
+		return gameService.checkGame();
+
+	}
 
 }
