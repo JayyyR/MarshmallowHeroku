@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.codehaus.jackson.impl.JsonParserBase;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -271,8 +272,17 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/games/checkday", method=RequestMethod.GET)
-	public @ResponseBody boolean checkDay() {
-		return gameService.checkDay();
+	public @ResponseBody JSONObject checkDay() {
+		
+		JSONObject object = new JSONObject();
+		boolean result = gameService.checkDay();
+		try {
+			object.put("day", result);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return object;
 
 	}
 	
