@@ -94,7 +94,6 @@ public class MongoGameDAO implements IGameDAO{
 
 		DBObject gameFound = cursor.next();
 		
-		System.out.println("game Found is " + ((String) gameFound.get("isDay")).toString());
 		return ((Boolean) gameFound.get("isDay")).booleanValue();
 	}
 
