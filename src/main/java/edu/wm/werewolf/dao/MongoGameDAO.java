@@ -2,6 +2,7 @@ package edu.wm.werewolf.dao;
 
 import java.net.UnknownHostException;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,7 +114,7 @@ public class MongoGameDAO implements IGameDAO{
 		DBCursor cursor = games.find();
 
 		DBObject gameFound = cursor.next();
-		String gameId = (String) gameFound.get("_id");
+		ObjectId gameId = (ObjectId) gameFound.get("_id");
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("_id", gameId);
 		
