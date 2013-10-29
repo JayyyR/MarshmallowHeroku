@@ -21,5 +21,9 @@ public class GameService {
 	public boolean checkDay(){
 		return gameDAO.checkDay();
 	}
+	
+	public void changeDay(){
+		gameDAO.changeDay();
+	}
 
 }

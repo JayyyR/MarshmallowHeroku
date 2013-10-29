@@ -95,4 +95,35 @@ public class MongoGameDAO implements IGameDAO{
 		return ((Boolean) gameFound.get("isDay")).booleanValue();
 	}
 
+	@Override
+	public void changeDay() {
+		// TODO Auto-generated method stub
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+		
+		//DB db = mongo.getDB("Werewolf");
+		DBCollection games = db.getCollection("Game");
+		
+		DBCursor cursor = games.find();
+
+		DBObject gameFound = cursor.next();
+		String gameId = (String) gameFound.get("_id");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("_id", gameId);
+		
+		BasicDBObject dayDoc = new BasicDBObject();
+		dayDoc.put("isDay", !checkDay());
+		
+		BasicDBObject updateObj = new BasicDBObject();
+		updateObj.put("$set", dayDoc);
+
+		games.update(searchQuery, updateObj);
+	}
+
 }
