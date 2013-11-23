@@ -112,6 +112,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		document.put("userid", player.getUserId());
 		document.put("werewolf", player.isWerewolf());
 		document.put("votedon", player.isVotedOn());
+		document.put("admin", player.isAdmin());
 		players.insert(document);
 
 	}
