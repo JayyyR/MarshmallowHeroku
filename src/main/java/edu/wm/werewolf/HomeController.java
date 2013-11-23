@@ -172,7 +172,7 @@ public class HomeController {
 	}
 	
 	// handles person form submit
-		@RequestMapping(value="/players/setAdmin/{id}", method=RequestMethod.POST)
+		@RequestMapping(value="/players/setAdmin", method=RequestMethod.POST)
 		@ResponseBody
 		public void setAdmin(String id) {
 			playerService.setAdmin(playerService.getPlayerById(id));
