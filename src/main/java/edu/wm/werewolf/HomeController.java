@@ -170,6 +170,16 @@ public class HomeController {
 		playerService.setDead(playerService.getPlayerById(id));
 
 	}
+	
+	// handles person form submit
+		@RequestMapping(value="/players/setAdmin/{id}", method=RequestMethod.POST)
+		@ResponseBody
+		public void setAdmin(String id) {
+			playerService.setAdmin(playerService.getPlayerById(id));
+
+		}
+	
+	
 
 	// handles person form submit
 	@RequestMapping(value="/players/updatePos", method=RequestMethod.POST)
