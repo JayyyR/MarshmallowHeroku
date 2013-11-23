@@ -173,6 +173,34 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		players.update(searchQuery, updateObj);
 
 	}
+	
+	@Override
+	public void setAdmin(Player player){
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+
+		DBCollection users = db.getCollection("Player");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("id", player.getId());
+		
+		BasicDBObject admin = new BasicDBObject();
+		
+		admin.put("admin", true);
+		
+		BasicDBObject updateAdmin = new BasicDBObject();
+		updateAdmin.put("$set", admin);
+
+		users.update(searchQuery, updateAdmin);
+		
+	}
+	
 
 	@Override
 	public void updatePos(Player player) {
@@ -208,6 +236,32 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		users.update(searchQuery, updateLat);
 		users.update(searchQuery, updateLng);
 
+	}
+
+	@Override
+	public boolean checkAdmin(Player player) {
+		// TODO Auto-generated method stub
+		
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+        
+		//DB db = mongo.getDB("Werewolf");
+		DBCollection players = db.getCollection("Player");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("id", player.getId());
+
+		
+		DBCursor cursor = players.find(searchQuery);
+		DBObject playerFound = cursor.next();
+		
+		return ((Boolean) playerFound.get("admin")).booleanValue();
+		
 	}
 
 }

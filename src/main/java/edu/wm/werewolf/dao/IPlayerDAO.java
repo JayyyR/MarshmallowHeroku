@@ -19,6 +19,7 @@ public interface IPlayerDAO {
 	
 	Player getPlayerById(String id) throws NoPlayerFoundException;
 	
-	
+	public void setAdmin(Player player);
 
+	public boolean checkAdmin(Player player);
 }

@@ -23,6 +23,10 @@ public class PlayerService {
 		return playerDAO.getAllAlive();
 	}
 	
+	public void setAdmin(Player player){
+		playerDAO.setAdmin(player);
+	}
+	
 	public void insertPlayer(Player player){
 		playerDAO.insertPlayer(player);
 	}

@@ -9,6 +9,7 @@ public class Player {
 	private String userId;
 	private boolean isWerewolf;
 	private boolean votedOn = false;
+	private boolean admin = false;
 	
 	public Player(){
 		
@@ -16,6 +17,10 @@ public class Player {
 	
 	public boolean isVotedOn() {
 		return votedOn;
+	}
+	
+	public boolean isAdmin() {
+		return admin;
 	}
 
 	public void setVotedOn(boolean votedOn) {
