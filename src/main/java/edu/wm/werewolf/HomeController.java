@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.codehaus.jackson.impl.JsonParserBase;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,20 +63,11 @@ public class HomeController {
 	//home
 
 	@RequestMapping(value="/players/alive", method=RequestMethod.GET)
-	public @ResponseBody JSONObject getAllAlive(){
+	public @ResponseBody List<Player> getAllAlive(){
 
 		List<Player> players = playerService.getAllAlive();
-		JSONObject result = new JSONObject();
-				try {
-					result.put("name", "Dade");
-					result.append("age", 23);
-					result.append("married", false);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-		return result;
+
+		return players;
 
 
 	}
