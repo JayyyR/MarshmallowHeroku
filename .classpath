@@ -30,5 +30,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Joe/Documents/workspace-sts-3.3.0.RELEASE/java-json.jar/java-json.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.codehaus.jackson.impl.JsonParserBase;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,10 +64,21 @@ public class HomeController {
 	//home
 
 	@RequestMapping(value="/players/alive", method=RequestMethod.GET)
-	public @ResponseBody List<Player> getAllAlive(){
+	public @ResponseBody JSONObject getAllAlive(){
 
 		List<Player> players = playerService.getAllAlive();
-		return players;
+		JSONObject result = new JSONObject();
+				try {
+					result.put("name", "Dade");
+					result.append("age", 23);
+					result.append("married", false);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+		return result;
+
 
 	}
 
@@ -170,16 +182,16 @@ public class HomeController {
 		playerService.setDead(playerService.getPlayerById(id));
 
 	}
-	
-	// handles person form submit
-		@RequestMapping(value="/players/setAdmin", method=RequestMethod.POST)
-		@ResponseBody
-		public void setAdmin(String id) {
-			playerService.setAdmin(playerService.getPlayerById(id));
 
-		}
-	
-	
+	// handles person form submit
+	@RequestMapping(value="/players/setAdmin", method=RequestMethod.POST)
+	@ResponseBody
+	public void setAdmin(String id) {
+		playerService.setAdmin(playerService.getPlayerById(id));
+
+	}
+
+
 
 	// handles person form submit
 	@RequestMapping(value="/players/updatePos", method=RequestMethod.POST)
@@ -279,13 +291,13 @@ public class HomeController {
 		return gameService.checkGame();
 
 	}
-	
+
 	@RequestMapping(value="/games/checkday", method=RequestMethod.GET)
 	public @ResponseBody boolean checkDay() {
 		return gameService.checkDay();
 
 	}
-	
+
 	@RequestMapping(value="/games/changeday", method=RequestMethod.GET)
 	public @ResponseBody void changeDay() {
 		gameService.changeDay();
