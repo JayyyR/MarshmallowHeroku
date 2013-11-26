@@ -8,27 +8,27 @@ public class Player {
 	private double lng;
 	private String userId;
 	private boolean isWerewolf;
-	private boolean votedOn = false;
+	private int votes;
 	private boolean admin = false;
 	
 	public Player(){
 		
 	}
 	
-	public boolean isVotedOn() {
-		return votedOn;
+	public int getVotes() {
+		return votes;
 	}
 	
 	public boolean isAdmin() {
 		return admin;
 	}
 
-	public void setVotedOn(boolean votedOn) {
-		this.votedOn = votedOn;
+	public void addVote() {
+		votes+=1;
 	}
 
 	public Player(String id, boolean isDead, double lat,
-			double lng, String userId, boolean isWerewolf) {
+			double lng, String userId, boolean isWerewolf, int votes) {
 		super();
 		this.id = id;
 		this.isDead = isDead;
@@ -36,6 +36,7 @@ public class Player {
 		this.lng = lng;
 		this.userId = userId;
 		this.isWerewolf = isWerewolf;
+		this.votes = votes;
 	}
 
 	public boolean isWerewolf() {

@@ -58,7 +58,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 			DBObject playerFound = cursor.next();
 			players.add(new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 					(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
-					 ((Boolean) playerFound.get("werewolf")).booleanValue()));
+					 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) playerFound.get("votes")));
 		}
 
 		return players;
@@ -111,7 +111,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		document.put("lng", player.getLng());
 		document.put("userid", player.getUserId());
 		document.put("werewolf", player.isWerewolf());
-		document.put("votedon", player.isVotedOn());
+		document.put("votes", player.getVotes());
 		document.put("admin", player.isAdmin());
 		players.insert(document);
 
@@ -142,7 +142,8 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		DBObject playerFound = cursor.next();
 		Player player = new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 				(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
-				 ((Boolean) playerFound.get("werewolf")).booleanValue());
+				 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) playerFound.get("votes"));
+		
 		return player;
 	}
 
@@ -158,6 +159,15 @@ public class MongoPlayerDAO implements IPlayerDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Player thePlayer = null;
+		try {
+			thePlayer = getPlayerById(p.getId());
+		} catch (NoPlayerFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int numVotes = thePlayer.getVotes();
+		
         db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
 		DBCollection players = db.getCollection("Player");
 
@@ -166,7 +176,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		searchQuery.put("id", p.getId());
 
 		BasicDBObject voteDocument = new BasicDBObject();
-		voteDocument.put("votedon", true);
+		voteDocument.put("votes", ++numVotes);
 
 		BasicDBObject updateObj = new BasicDBObject();
 		updateObj.put("$set", voteDocument);
