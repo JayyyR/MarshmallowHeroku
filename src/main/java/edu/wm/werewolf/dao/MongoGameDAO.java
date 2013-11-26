@@ -14,7 +14,6 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoURI;
-import com.sun.org.apache.xerces.internal.util.URI;
 
 import edu.wm.werewolf.domain.Game;
 

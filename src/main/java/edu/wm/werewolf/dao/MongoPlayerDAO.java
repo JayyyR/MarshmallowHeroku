@@ -58,7 +58,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 			DBObject playerFound = cursor.next();
 			players.add(new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 					(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
-					 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) playerFound.get("votes")));
+					 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString())));
 		}
 
 		return players;
@@ -142,7 +142,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		DBObject playerFound = cursor.next();
 		Player player = new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 				(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
-				 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) playerFound.get("votes"));
+				 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()));
 		
 		return player;
 	}
