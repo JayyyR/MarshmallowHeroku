@@ -353,7 +353,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		
 		BasicDBObject votes = new BasicDBObject();
 
-		hasVoted.put("votes", false)
+		hasVoted.put("votes", 0);
 
 		BasicDBObject updateAdmin = new BasicDBObject();
 		updateAdmin.put("$set", hasVoted);
