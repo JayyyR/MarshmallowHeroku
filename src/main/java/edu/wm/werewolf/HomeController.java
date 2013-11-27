@@ -148,7 +148,7 @@ public class HomeController {
 	public @ResponseBody String insert(String id, String isDead, String lat, 
 			String lng, String userId, String isWerewolf){
 
-		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, Boolean.valueOf(isWerewolf), 0, false);
+		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, Boolean.valueOf(isWerewolf), 0, false, false);
 		playerService.insertPlayer(player);
 		return "inserted";
 
