@@ -344,15 +344,27 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		DBCollection players = db.getCollection("Player");
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("dead", false);
+		BasicDBObject searchQuery2 = new BasicDBObject();
+		searchQuery2.put("dead", true);
 
 		BasicDBObject hasVoted = new BasicDBObject();
 
 		hasVoted.put("hasvoted", false);
+		
+		BasicDBObject votes = new BasicDBObject();
+
+		hasVoted.put("votes", false)
 
 		BasicDBObject updateAdmin = new BasicDBObject();
 		updateAdmin.put("$set", hasVoted);
+		BasicDBObject updateAdmin2 = new BasicDBObject();
+		updateAdmin2.put("$set", votes);
 
 		players.update(searchQuery, updateAdmin);
+		players.update(searchQuery, updateAdmin2);
+		
+		players.update(searchQuery2, updateAdmin);
+		players.update(searchQuery2, updateAdmin2);
 
 
 
