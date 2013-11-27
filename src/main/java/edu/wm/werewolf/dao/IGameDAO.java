@@ -10,7 +10,6 @@ public interface IGameDAO {
 	boolean checkGame();
 	boolean checkDay();
 	void changeDay();
-	
-	
-
+	String getNews();
+	void changeNews(String news);
 }

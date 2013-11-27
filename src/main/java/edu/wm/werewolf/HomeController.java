@@ -309,5 +309,16 @@ public class HomeController {
 		gameService.changeDay();
 
 	}
+	
+	@RequestMapping(value="/games/getnews", method=RequestMethod.GET)
+	public @ResponseBody String getnews() {
+		return gameService.getNews();
+
+	}
+	
+	@RequestMapping(value="/games/changenews", method=RequestMethod.POST)
+	public @ResponseBody void changeNews(String news) {
+		gameService.changeNews(news);
+	}
 
 }

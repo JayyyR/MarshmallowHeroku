@@ -47,6 +47,7 @@ public class MongoGameDAO implements IGameDAO{
 		document.put("dayNightFreq", game.getDayNightFreq());
 		document.put("createdDate", game.getCreatedDate());
 		document.put("isDay", game.isDay());
+		document.put("news", game.getNews());
 		games.insert(document);
 		
 	}
@@ -125,6 +126,58 @@ public class MongoGameDAO implements IGameDAO{
 		updateObj.put("$set", dayDoc);
 
 		games.update(searchQuery, updateObj);
+	}
+
+	@Override
+	public String getNews() {
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+		
+		//DB db = mongo.getDB("Werewolf");
+		DBCollection games = db.getCollection("Game");
+		
+		DBCursor cursor = games.find();
+
+		DBObject gameFound = cursor.next();
+		
+		return ((String) gameFound.get("news")).toString();
+	}
+
+	@Override
+	public void changeNews(String news) {
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+		
+		//DB db = mongo.getDB("Werewolf");
+		DBCollection games = db.getCollection("Game");
+		
+		DBCursor cursor = games.find();
+
+		DBObject gameFound = cursor.next();
+		ObjectId gameId = (ObjectId) gameFound.get("_id");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("_id", gameId);
+		
+		BasicDBObject dayDoc = new BasicDBObject();
+		dayDoc.put("news", news);
+		
+		BasicDBObject updateObj = new BasicDBObject();
+		updateObj.put("$set", dayDoc);
+
+		games.update(searchQuery, updateObj);
+		
 	}
 
 }

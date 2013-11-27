@@ -8,10 +8,19 @@ public class Game {
 	
 	private Date createdDate;
 	private boolean isDay = true;
+	String news = "No News";
 	public Game(int dayNightFreq, Date createdDate) {
 		super();
 		this.dayNightFreq = dayNightFreq;
 		this.createdDate = createdDate;
+	}
+	
+	public String getNews(){
+		return news;
+	}
+	
+	public void setNews(String newNews){
+		news = newNews;
 	}
 	
 	public boolean isDay() {

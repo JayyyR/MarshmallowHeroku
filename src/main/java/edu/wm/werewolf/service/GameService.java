@@ -25,5 +25,13 @@ public class GameService {
 	public void changeDay(){
 		gameDAO.changeDay();
 	}
+	
+	public String getNews(){
+		return gameDAO.getNews();
+	}
+	
+	public void changeNews(String news){
+		gameDAO.changeNews(news);
+	}
 
 }
