@@ -360,11 +360,11 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		BasicDBObject updateAdmin2 = new BasicDBObject();
 		updateAdmin2.put("$set", votes);
 
-		players.update(searchQuery, updateAdmin);
-		players.update(searchQuery, updateAdmin2);
+		players.updateMulti(searchQuery, updateAdmin);
+		players.updateMulti(searchQuery, updateAdmin2);
 		
-		players.update(searchQuery2, updateAdmin);
-		players.update(searchQuery2, updateAdmin2);
+		players.updateMulti(searchQuery2, updateAdmin);
+		players.updateMulti(searchQuery2, updateAdmin2);
 
 
 
