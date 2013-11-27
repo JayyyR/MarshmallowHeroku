@@ -342,10 +342,12 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		}
         db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
 
-		DBCollection playersCol = db.getCollection("Player");
-		//create and return players
-		DBCursor cursor = playersCol.find();
+        DBCollection playersCol = db.getCollection("Player");
+		BasicDBObject searchQuery1 = new BasicDBObject();
+		searchQuery1.put("dead", false);
 
+		//create and return players
+		DBCursor cursor = playersCol.find(searchQuery1);
 		
 		//fix casting
 		while (cursor.hasNext()) {
