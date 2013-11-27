@@ -72,7 +72,7 @@ public class HomeController {
 
 	}
 	
-	@RequestMapping(value="/players/restvoting", method=RequestMethod.GET)
+	@RequestMapping(value="/players/resetvoting", method=RequestMethod.GET)
 	public @ResponseBody void resetVoting(){
 
 		playerService.resetAllVoting();
