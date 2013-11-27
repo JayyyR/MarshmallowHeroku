@@ -62,4 +62,8 @@ public class PlayerService {
 	public boolean getVoted(Player player){
 		return playerDAO.getVoted(player);
 	}
+	
+	public void resetAllVoting(){
+		playerDAO.resetAllVoting();
+	}
 }

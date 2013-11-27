@@ -329,4 +329,44 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		return ((Boolean) playerFound.get("hasvoted")).booleanValue();
 	}
 
+	@Override
+	public void resetAllVoting() {
+		String pass = new String(mongoURI.getPassword());
+		logger.info("Mongo user is " + mongoURI.getUsername() + " mongo pass is: " + pass);
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+
+		DBCollection playersCol = db.getCollection("Player");
+		//create and return players
+		DBCursor cursor = playersCol.find();
+
+		
+		//fix casting
+		while (cursor.hasNext()) {
+			DBObject playerFound = cursor.next();
+			BasicDBObject hasVoted = new BasicDBObject();
+			hasVoted.put("hasvoted", false);
+			
+			BasicDBObject votes = new BasicDBObject();
+			hasVoted.put("votes", 0);
+			
+			BasicDBObject voteUpdate = new BasicDBObject();
+			voteUpdate.put("$set", hasVoted);
+			voteUpdate.put("$set", votes);
+			
+			BasicDBObject searchQuery = new BasicDBObject();
+			searchQuery.put("id", (String) playerFound.get("id").toString());
+			playersCol.update(searchQuery, voteUpdate);
+			
+		}
+
+		
+	}
+
 }

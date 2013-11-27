@@ -26,4 +26,6 @@ public interface IPlayerDAO {
 	public void setHasVoted(Player player);
 	
 	public boolean getVoted(Player player);
+	
+	public void resetAllVoting();
 }
