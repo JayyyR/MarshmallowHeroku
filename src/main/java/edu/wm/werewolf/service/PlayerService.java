@@ -58,4 +58,8 @@ public class PlayerService {
 	public void setVoted(Player player){
 		playerDAO.setHasVoted(player);
 	}
+	
+	public boolean getVoted(Player player){
+		return playerDAO.getVoted(player);
+	}
 }

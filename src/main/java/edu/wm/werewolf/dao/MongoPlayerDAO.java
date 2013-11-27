@@ -304,4 +304,27 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		
 	}
 
+	@Override
+	public boolean getVoted(Player player) {
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+        
+		//DB db = mongo.getDB("Werewolf");
+		DBCollection players = db.getCollection("Player");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("id", player.getId());
+
+		
+		DBCursor cursor = players.find(searchQuery);
+		DBObject playerFound = cursor.next();
+		
+		return ((Boolean) playerFound.get("hasvoted")).booleanValue();
+	}
+
 }

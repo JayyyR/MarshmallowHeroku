@@ -180,16 +180,22 @@ public class HomeController {
 		playerService.setAdmin(playerService.getPlayerById(id));
 
 	}
-	
-	// handles person form submit
-		@RequestMapping(value="/players/setVoted", method=RequestMethod.POST)
-		@ResponseBody
-		public void setVoted(String id) {
-			Player thePlayer = playerService.getPlayerById(id);
-			thePlayer.switchHasVoted();
-			playerService.setVoted(thePlayer);
 
-		}
+	// handles person form submit
+	@RequestMapping(value="/players/setVoted", method=RequestMethod.POST)
+	@ResponseBody
+	public void setVoted(String id) {
+		Player thePlayer = playerService.getPlayerById(id);
+		thePlayer.switchHasVoted();
+		playerService.setVoted(thePlayer);
+
+	}
+	
+	@RequestMapping(value="/players/hasVoted", method=RequestMethod.GET)
+	public @ResponseBody boolean hasVoted(String id){
+		return playerService.getVoted(playerService.getPlayerById(id));
+
+	}
 
 
 
