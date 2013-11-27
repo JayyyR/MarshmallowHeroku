@@ -185,7 +185,9 @@ public class HomeController {
 		@RequestMapping(value="/players/setVoted", method=RequestMethod.POST)
 		@ResponseBody
 		public void setVoted(String id) {
-			playerService.setVoted(playerService.getPlayerById(id));
+			Player thePlayer = playerService.getPlayerById(id);
+			thePlayer.switchHasVoted();
+			playerService.setVoted(thePlayer);
 
 		}
 
