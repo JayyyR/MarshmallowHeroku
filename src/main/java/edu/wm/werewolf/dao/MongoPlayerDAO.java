@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList; //error!
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -331,44 +332,73 @@ public class MongoPlayerDAO implements IPlayerDAO {
 
 	@Override
 	public void resetAllVoting() {
-		String pass = new String(mongoURI.getPassword());
-		logger.info("Mongo user is " + mongoURI.getUsername() + " mongo pass is: " + pass);
-		DB db = null;
-		try {
-			db = mongoURI.connectDB();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
-
-        DBCollection playersCol = db.getCollection("Player");
-		BasicDBObject searchQuery1 = new BasicDBObject();
-		searchQuery1.put("dead", false);
-
-		//create and return players
-		DBCursor cursor = playersCol.find(searchQuery1);
+//		String pass = new String(mongoURI.getPassword());
+//		logger.info("Mongo user is " + mongoURI.getUsername() + " mongo pass is: " + pass);
+//		DB db = null;
+//		try {
+//			db = mongoURI.connectDB();
+//		} catch (UnknownHostException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+//
+//        DBCollection playersCol = db.getCollection("Player");
+//		BasicDBObject searchQuery1 = new BasicDBObject();
+//		searchQuery1.put("dead", false);
+//
+//		//create and return players
+//		DBCursor cursor = playersCol.find(searchQuery1);
+//		
+//		//fix casting
+//		while (cursor.hasNext()) {
+//			DBObject playerFound = cursor.next();
+//			BasicDBObject hasVoted = new BasicDBObject();
+//			hasVoted.put("hasvoted", false);
+//			
+//			BasicDBObject votes = new BasicDBObject();
+//			hasVoted.put("votes", 0);
+//			
+//			BasicDBObject voteUpdate = new BasicDBObject();
+//			voteUpdate.put("$set", hasVoted);
+//			voteUpdate.put("$set", votes);
+//			
+//			BasicDBObject searchQuery = new BasicDBObject();
+//			searchQuery.put("id", (String) playerFound.get("id").toString());
+//			playersCol.update(searchQuery, voteUpdate);
+//			
+//		}
 		
-		//fix casting
-		while (cursor.hasNext()) {
-			DBObject playerFound = cursor.next();
-			BasicDBObject hasVoted = new BasicDBObject();
-			hasVoted.put("hasvoted", false);
-			
-			BasicDBObject votes = new BasicDBObject();
-			hasVoted.put("votes", 0);
-			
-			BasicDBObject voteUpdate = new BasicDBObject();
-			voteUpdate.put("$set", hasVoted);
-			voteUpdate.put("$set", votes);
-			
-			BasicDBObject searchQuery = new BasicDBObject();
-			searchQuery.put("id", (String) playerFound.get("id").toString());
-			playersCol.update(searchQuery, voteUpdate);
-			
-		}
+		// TODO Auto-generated method stub
+				DB db = null;
+				try {
+					db = mongoURI.connectDB();
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+				
+				//DB db = mongo.getDB("Werewolf");
+				DBCollection games = db.getCollection("Game");
+				
+				DBCursor cursor = games.find();
+
+				DBObject gameFound = cursor.next();
+				ObjectId gameId = (ObjectId) gameFound.get("_id");
+				BasicDBObject searchQuery = new BasicDBObject();
+				searchQuery.put("_id", gameId);
+				
+				BasicDBObject dayDoc = new BasicDBObject();
+				dayDoc.put("isDay", false);
+				
+				BasicDBObject updateObj = new BasicDBObject();
+				updateObj.put("$set", dayDoc);
+
+				games.update(searchQuery, updateObj);
+			}
 
 		
-	}
+	
 
 }
