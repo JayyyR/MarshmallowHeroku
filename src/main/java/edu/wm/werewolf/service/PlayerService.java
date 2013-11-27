@@ -54,4 +54,8 @@ public class PlayerService {
 		}
 		return null;
 	}
+	
+	public void setVoted(Player player){
+		playerDAO.setHasVoted(player);
+	}
 }

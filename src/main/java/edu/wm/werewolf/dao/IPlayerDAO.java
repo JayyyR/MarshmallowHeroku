@@ -22,4 +22,6 @@ public interface IPlayerDAO {
 	public void setAdmin(Player player);
 
 	public boolean checkAdmin(Player player);
+	
+	public void setHasVoted(Player player);
 }

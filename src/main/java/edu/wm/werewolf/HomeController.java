@@ -148,7 +148,7 @@ public class HomeController {
 	public @ResponseBody String insert(String id, String isDead, String lat, 
 			String lng, String userId, String isWerewolf){
 
-		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, Boolean.valueOf(isWerewolf), 0);
+		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, Boolean.valueOf(isWerewolf), 0, false);
 		playerService.insertPlayer(player);
 		return "inserted";
 
@@ -159,7 +159,7 @@ public class HomeController {
 	@RequestMapping(value="/players/vote", method=RequestMethod.POST)
 	@ResponseBody
 	public void placeVote(String id) {
-		System.out.println("in place vote homecontrol");
+		System.out.println("in place vote ");
 		playerService.placeVoteOn(playerService.getPlayerById(id));
 	}
 
@@ -180,6 +180,14 @@ public class HomeController {
 		playerService.setAdmin(playerService.getPlayerById(id));
 
 	}
+	
+	// handles person form submit
+		@RequestMapping(value="/players/setVoted", method=RequestMethod.POST)
+		@ResponseBody
+		public void setVoted(String id) {
+			playerService.setVoted(playerService.getPlayerById(id));
+
+		}
 
 
 

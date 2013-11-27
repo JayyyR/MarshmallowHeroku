@@ -10,9 +10,18 @@ public class Player {
 	private boolean isWerewolf;
 	private int votes;
 	private boolean admin = false;
+	private boolean hasVoted = false;
 	
 	public Player(){
 		
+	}
+	
+	public boolean getHasVoted(){
+		return hasVoted;
+	}
+	
+	public void switchHasVoted(){
+		hasVoted = !hasVoted;
 	}
 	
 	public int getVotes() {
@@ -28,7 +37,7 @@ public class Player {
 	}
 
 	public Player(String id, boolean isDead, double lat,
-			double lng, String userId, boolean isWerewolf, int votes) {
+			double lng, String userId, boolean isWerewolf, int votes, boolean hasVoted) {
 		super();
 		this.id = id;
 		this.isDead = isDead;
@@ -37,6 +46,7 @@ public class Player {
 		this.userId = userId;
 		this.isWerewolf = isWerewolf;
 		this.votes = votes;
+		this.hasVoted =hasVoted;
 	}
 
 	public boolean isWerewolf() {

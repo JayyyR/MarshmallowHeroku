@@ -58,7 +58,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 			DBObject playerFound = cursor.next();
 			players.add(new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 					(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
-					 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString())));
+					 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()), ((Boolean) playerFound.get("hasvoted")).booleanValue()));
 		}
 
 		return players;
@@ -113,6 +113,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		document.put("werewolf", player.isWerewolf());
 		document.put("votes", player.getVotes());
 		document.put("admin", player.isAdmin());
+		document.put("hasvoted", player.getHasVoted());
 		players.insert(document);
 
 	}
@@ -142,7 +143,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		DBObject playerFound = cursor.next();
 		Player player = new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 				(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
-				 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()));
+				 ((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()), ((Boolean) playerFound.get("hasvoted")).booleanValue());
 		
 		return player;
 	}
@@ -272,6 +273,34 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		DBObject playerFound = cursor.next();
 		
 		return ((Boolean) playerFound.get("admin")).booleanValue();
+		
+	}
+
+	@Override
+	public void setHasVoted(Player player) {
+		// TODO Auto-generated method stub
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+        
+        DBCollection players = db.getCollection("Player");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("id", player.getId());
+		
+		BasicDBObject hasVoted = new BasicDBObject();
+		
+		hasVoted.put("hasvoted", player.getHasVoted());
+		
+		BasicDBObject updateAdmin = new BasicDBObject();
+		updateAdmin.put("$set", hasVoted);
+
+		players.update(searchQuery, updateAdmin);
+		
 		
 	}
 
