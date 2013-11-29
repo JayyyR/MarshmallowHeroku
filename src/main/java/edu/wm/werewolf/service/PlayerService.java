@@ -23,6 +23,10 @@ public class PlayerService {
 		return playerDAO.getAllAlive();
 	}
 	
+	public List<Player> getAllDead(){
+		return playerDAO.getAllDead();
+	}
+	
 	public void setAdmin(Player player){
 		playerDAO.setAdmin(player);
 	}
@@ -65,5 +69,9 @@ public class PlayerService {
 	
 	public void resetAllVoting(){
 		playerDAO.resetAllVoting();
+	}
+	
+	public void switchKilledLastNight(Player player){
+		playerDAO.switchKilledLastNight(player);
 	}
 }

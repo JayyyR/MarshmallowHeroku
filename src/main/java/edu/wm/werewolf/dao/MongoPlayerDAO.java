@@ -59,7 +59,45 @@ public class MongoPlayerDAO implements IPlayerDAO {
 			players.add(new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 					(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
 					((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()), ((Boolean) playerFound.get("hasvoted")).booleanValue(),
-					((Boolean) playerFound.get("admin")).booleanValue()));
+					((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue()));
+		}
+
+		return players;
+	}
+
+	@Override
+	public List<Player> getAllDead() {
+		//DB db = mongo.getDB("Werewolf");
+
+		String pass = new String(mongoURI.getPassword());
+		logger.info("Mongo user is " + mongoURI.getUsername() + " mongo pass is: " + pass);
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+
+
+		List<Player> players = new ArrayList<Player>();
+
+		DBCollection playersCol = db.getCollection("Player");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("dead", true);
+
+		//create and return players
+		DBCursor cursor = playersCol.find(searchQuery);
+
+
+		//fix casting
+		while (cursor.hasNext()) {
+			DBObject playerFound = cursor.next();
+			players.add(new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
+					(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
+					((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()), ((Boolean) playerFound.get("hasvoted")).booleanValue(),
+					((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue()));
 		}
 
 		return players;
@@ -115,6 +153,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		document.put("votes", player.getVotes());
 		document.put("admin", player.isAdmin());
 		document.put("hasvoted", player.getHasVoted());
+		document.put("killednight", false);
 		players.insert(document);
 
 	}
@@ -145,7 +184,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		Player player = new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 				(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
 				((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()), ((Boolean) playerFound.get("hasvoted")).booleanValue(),
-				((Boolean) playerFound.get("admin")).booleanValue());
+				((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue());
 
 		return player;
 	}
@@ -350,7 +389,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		BasicDBObject hasVoted = new BasicDBObject();
 
 		hasVoted.put("hasvoted", false);
-		
+
 		BasicDBObject votes = new BasicDBObject();
 
 		hasVoted.put("votes", 0);
@@ -362,10 +401,38 @@ public class MongoPlayerDAO implements IPlayerDAO {
 
 		players.updateMulti(searchQuery, updateAdmin);
 		players.updateMulti(searchQuery, updateAdmin2);
-		
+
 		players.updateMulti(searchQuery2, updateAdmin);
 		players.updateMulti(searchQuery2, updateAdmin2);
 
+
+
+	}
+
+	@Override
+	public void switchKilledLastNight(Player player) {
+		// TODO Auto-generated method stub
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+
+		DBCollection players = db.getCollection("Player");
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("id", player.getId());
+
+		BasicDBObject hasVoted = new BasicDBObject();
+
+		hasVoted.put("killednight", player.getKilledLastNight());
+
+		BasicDBObject updateAdmin = new BasicDBObject();
+		updateAdmin.put("$set", hasVoted);
+
+		players.update(searchQuery, updateAdmin);
 
 
 	}

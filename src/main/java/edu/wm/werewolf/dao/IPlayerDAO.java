@@ -9,6 +9,8 @@ public interface IPlayerDAO {
 	
 	public List<Player> getAllAlive();
 	
+	public List<Player> getAllDead();
+	
 	void insertPlayer(Player player);
 	
 	void updatePos(Player player);
@@ -28,4 +30,6 @@ public interface IPlayerDAO {
 	public boolean getVoted(Player player);
 	
 	public void resetAllVoting();
+	
+	public void switchKilledLastNight(Player player);
 }

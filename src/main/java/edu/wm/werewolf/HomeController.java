@@ -72,6 +72,16 @@ public class HomeController {
 
 	}
 	
+	@RequestMapping(value="/players/dead", method=RequestMethod.GET)
+	public @ResponseBody List<Player> getAllDead(){
+
+		List<Player> players = playerService.getAllDead();
+
+		return players;
+
+
+	}
+	
 	@RequestMapping(value="/players/resetvoting", method=RequestMethod.GET)
 	public @ResponseBody void resetVoting(){
 
@@ -156,7 +166,7 @@ public class HomeController {
 	public @ResponseBody String insert(String id, String isDead, String lat, 
 			String lng, String userId, String isWerewolf){
 
-		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, Boolean.valueOf(isWerewolf), 0, false, false);
+		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, Boolean.valueOf(isWerewolf), 0, false, false, false);
 		playerService.insertPlayer(player);
 		return "inserted";
 
@@ -170,6 +180,16 @@ public class HomeController {
 		System.out.println("in place vote ");
 		playerService.placeVoteOn(playerService.getPlayerById(id));
 	}
+	
+	// handles person form submit
+		@RequestMapping(value="/players/killLastNight", method=RequestMethod.POST)
+		@ResponseBody
+		public void switchKillLastNight(String id) {
+			System.out.println("in place vote ");
+			Player thePlayer = playerService.getPlayerById(id);
+			thePlayer.switchKilledLastNight();
+			playerService.switchKilledLastNight(thePlayer);
+		}
 
 
 	// handles person form submit
