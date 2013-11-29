@@ -32,4 +32,6 @@ public interface IPlayerDAO {
 	public void resetAllVoting();
 	
 	public void switchKilledLastNight(Player player);
+	
+	public void resetAllKillLast();
 }

@@ -74,4 +74,8 @@ public class PlayerService {
 	public void switchKilledLastNight(Player player){
 		playerDAO.switchKilledLastNight(player);
 	}
+	
+	public void resetKilledLastNight(){
+		playerDAO.resetAllKillLast();
+	}
 }

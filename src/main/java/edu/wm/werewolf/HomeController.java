@@ -89,6 +89,14 @@ public class HomeController {
 
 
 	}
+	
+	@RequestMapping(value="/players/resetkill", method=RequestMethod.GET)
+	public @ResponseBody void resetKill(){
+
+		playerService.resetKilledLastNight();
+
+
+	}
 
 	@RequestMapping(value="/players/werewolves", method=RequestMethod.GET)
 	public @ResponseBody int getAllWolves(){

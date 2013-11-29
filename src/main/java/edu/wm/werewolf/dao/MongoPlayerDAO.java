@@ -437,4 +437,31 @@ public class MongoPlayerDAO implements IPlayerDAO {
 
 	}
 
+	@Override
+	public void resetAllKillLast() {
+		DB db = null;
+		try {
+			db = mongoURI.connectDB();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+
+		DBCollection players = db.getCollection("Player");
+		BasicDBObject searchQuery2 = new BasicDBObject();
+		searchQuery2.put("dead", true);
+
+		BasicDBObject hasVoted = new BasicDBObject();
+
+		hasVoted.put("killednight", false);
+
+		BasicDBObject updateAdmin = new BasicDBObject();
+		updateAdmin.put("$set", hasVoted);
+
+		players.updateMulti(searchQuery2, updateAdmin);
+
+		
+	}
+
 }
