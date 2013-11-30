@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -173,8 +174,20 @@ public class HomeController {
 	@RequestMapping(value="/players/insert", method=RequestMethod.POST)
 	public @ResponseBody String insert(String id, String isDead, String lat, 
 			String lng, String userId, String isWerewolf){
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
+		String date= sdf.format(cal.getTime());
+		Date theDate = null;
+		try {
+			theDate = sdf.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, Boolean.valueOf(isWerewolf), 0, false, false, false);
+		Player player = new Player(id, Boolean.valueOf(isDead), Double.parseDouble(lat), Double.parseDouble(lng), userId, 
+				Boolean.valueOf(isWerewolf), 0, false, false, false, theDate);
 		playerService.insertPlayer(player);
 		return "inserted";
 

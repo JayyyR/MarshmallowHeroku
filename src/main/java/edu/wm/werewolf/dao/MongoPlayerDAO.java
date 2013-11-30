@@ -1,8 +1,12 @@
 package edu.wm.werewolf.dao;
 
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList; //error!
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,10 +60,17 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		//fix casting
 		while (cursor.hasNext()) {
 			DBObject playerFound = cursor.next();
+			Date date = null;
+			try {
+				date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createdate").toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			players.add(new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 					(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
 					((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()), ((Boolean) playerFound.get("hasvoted")).booleanValue(),
-					((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue()));
+					((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue(),date));
 		}
 
 		return players;
@@ -94,10 +105,17 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		//fix casting
 		while (cursor.hasNext()) {
 			DBObject playerFound = cursor.next();
+			Date date = null;
+			try {
+				date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createdate").toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			players.add(new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 					(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
 					((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()), ((Boolean) playerFound.get("hasvoted")).booleanValue(),
-					((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue()));
+					((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue(), date));
 		}
 
 		return players;
@@ -154,6 +172,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		document.put("admin", player.isAdmin());
 		document.put("hasvoted", player.getHasVoted());
 		document.put("killednight", false);
+		document.put("createddate", player.getCreatedDate());
 		players.insert(document);
 
 	}
@@ -181,10 +200,17 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		//create and return player
 		DBCursor cursor = players.find(searchQuery);
 		DBObject playerFound = cursor.next();
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createdate").toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Player player = new Player((String) playerFound.get("id").toString(), ((Boolean) playerFound.get("dead")).booleanValue(),
 				(Double.valueOf(playerFound.get("lat").toString())), (Double.valueOf(playerFound.get("lng").toString())), (String) playerFound.get("userid").toString(),
 				((Boolean) playerFound.get("werewolf")).booleanValue(), (int) Integer.parseInt((playerFound.get("votes")).toString()), ((Boolean) playerFound.get("hasvoted")).booleanValue(),
-				((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue());
+				((Boolean) playerFound.get("admin")).booleanValue(), ((Boolean) playerFound.get("killednight")).booleanValue(),date);
 
 		return player;
 	}
