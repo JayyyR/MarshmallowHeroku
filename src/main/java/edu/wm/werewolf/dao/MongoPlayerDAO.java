@@ -62,7 +62,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 			DBObject playerFound = cursor.next();
 			Date date = null;
 			try {
-				date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createdate").toString());
+				date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createddate").toString());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -107,7 +107,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 			DBObject playerFound = cursor.next();
 			Date date = null;
 			try {
-				date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createdate").toString());
+				date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createddate").toString());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -202,7 +202,7 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		DBObject playerFound = cursor.next();
 		Date date = null;
 		try {
-			date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createdate").toString());
+			date = new SimpleDateFormat("MM/dd/yy HH:mm:ss").parse((String) playerFound.get("createddate").toString());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -2,6 +2,6 @@ import requests
 import datetime
 
 #kill
-hs = {'id': "jayr"}
+hs = {'id': "jracosta"}
 print ("\n...voting Joe")
-getNear = requests.post('http://jayyyyrwerewolf.herokuapp.com/players/killLastNight', params = hs)
+getNear = requests.post('http://jayyyyrwerewolf.herokuapp.com/players/setAdmin', params = hs)
