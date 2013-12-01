@@ -1,6 +1,7 @@
 package edu.wm.werewolf.dao;
 
 import java.net.UnknownHostException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList; //error!
@@ -172,7 +173,9 @@ public class MongoPlayerDAO implements IPlayerDAO {
 		document.put("admin", player.isAdmin());
 		document.put("hasvoted", player.getHasVoted());
 		document.put("killednight", false);
-		document.put("createddate", player.getCreatedDate());
+		
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		document.put("createddate", df.format(player.getCreatedDate()));
 		players.insert(document);
 
 	}
