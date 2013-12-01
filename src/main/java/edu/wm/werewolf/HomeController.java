@@ -251,12 +251,12 @@ public class HomeController {
 	// handles person form submit
 	@RequestMapping(value="/players/updatePos", method=RequestMethod.POST)
 	@ResponseBody
-	public void updatePos(String id, double lat, double lng) {
+	public void updatePos(String id, String lat, String lng) {
 		System.out.println("in update homecontroller");
 
 		Player updatePlay = playerService.getPlayerById(id);
-		updatePlay.setLat(lat);
-		updatePlay.setLng(lng);
+		updatePlay.setLat(Long.valueOf(lat).longValue());
+		updatePlay.setLng(Long.valueOf(lng).longValue());
 		playerService.updatePos(updatePlay);
 
 	}
