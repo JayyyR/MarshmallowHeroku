@@ -255,8 +255,8 @@ public class HomeController {
 		System.out.println("in update homecontroller");
 
 		Player updatePlay = playerService.getPlayerById(id);
-		updatePlay.setLat(Long.valueOf(lat).longValue());
-		updatePlay.setLng(Long.valueOf(lng).longValue());
+		updatePlay.setLat(Double.parseDouble(lat));
+		updatePlay.setLng(Double.parseDouble(lng));
 		playerService.updatePos(updatePlay);
 
 	}
