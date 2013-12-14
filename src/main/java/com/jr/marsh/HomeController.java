@@ -62,8 +62,8 @@ public class HomeController {
 	// handles person form submit
 	@RequestMapping(value="/insertscore", method=RequestMethod.POST)
 	@ResponseBody
-	public void insertScore(Long score) {
-		gameService.insertScore(score, "JOE");
+	public void insertScore(Long score, String name) {
+		gameService.insertScore(score, name);
 
 	}
 }
