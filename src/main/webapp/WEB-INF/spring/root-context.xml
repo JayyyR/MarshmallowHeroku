@@ -8,11 +8,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:annotation-config />
 
-	<bean id="playerDAO" class="com.jr.marsh.dao.MongoPlayerDAO" />
-	<bean id="userDAO" class="com.jr.marsh.dao.MongoUserDAO" />
 	<bean id="gameDAO" class="com.jr.marsh.dao.MongoGameDAO" />
-	<bean id="playerService" class="com.jr.marsh.service.PlayerService" />
-	<bean id="userService" class="com.jr.marsh.service.UserService" />
 	<bean id="gameService" class="com.jr.marsh.service.GameService" />
 
 	<!-- <bean id="mongoURI" class="com.mongodb.MongoURI">

@@ -34,6 +34,9 @@ public class MongoGameDAO implements IGameDAO{
 			e.printStackTrace();
 		}
         db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
+        
+        Score newScore = new Score(name, score);
+        
 
 		
 	}

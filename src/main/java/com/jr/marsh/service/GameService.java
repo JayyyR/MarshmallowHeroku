@@ -1,5 +1,7 @@
 package com.jr.marsh.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jr.marsh.dao.IGameDAO;
@@ -13,6 +15,10 @@ public class GameService {
 	public void insertScore(Long score, String name) {
 		gameDAO.insertScore(score, name);
 	
+	}
+	
+	public ArrayList<Score> getScores(){
+		return gameDAO.getScores();
 	}
 	
 
