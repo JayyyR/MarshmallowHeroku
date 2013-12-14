@@ -36,7 +36,11 @@ public class MongoGameDAO implements IGameDAO{
         db.authenticate(mongoURI.getUsername(), mongoURI.getPassword());
         
         Score newScore = new Score(name, score);
-        
+        DBCollection scores = db.getCollection("Scores");
+		BasicDBObject document = new BasicDBObject();
+		document.put("name", newScore.getName());
+		document.put("score", newScore.getScore());
+		scores.insert(document);
 
 		
 	}
